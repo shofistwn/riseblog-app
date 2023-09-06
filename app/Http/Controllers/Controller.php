@@ -19,7 +19,11 @@ class Controller extends BaseController
     public $data    = [];
     public $code    = 200;
 
-    public function createResponse($success, $message, $data, $code) : JsonResponse {
+    public function createResponse(bool $success, string $message, array $data, int $code) : JsonResponse {
+        if (!is_int($code) || $code !== null) {
+            $code = 200;
+        }
+
         return response()->json([
             'success'   => $success,
             'message'   => $message,

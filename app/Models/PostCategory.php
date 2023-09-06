@@ -11,8 +11,6 @@ class PostCategory extends Model
 
     public $timestamps = false;
 
-    protected $guarded = ['id'];
-
     public function post() {
         return $this->belongsTo(Post::class);
     }

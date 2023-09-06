@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +36,18 @@ Route::prefix('v1')
                     });
             });
 
+        Route::prefix('posts')
+            ->controller(PostController::class)
+            ->group(function () {
+
+                Route::get('/', 'list');
+                Route::get('/{postSlug}', 'show');
+
+                Route::middleware(['jwt.authenticated'])
+                    ->group(function () {
+                        Route::post('/', 'create');
+                        Route::post('/{postSlug}', 'update');
+                        Route::post('/{postSlug}/delete', 'delete');
+                    });
+            });
     });
