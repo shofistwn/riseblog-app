@@ -11,10 +11,12 @@ class UserController extends Controller
 {
     public function profile(string $username) : JsonResponse {
         try {
-            $user = User::where('username', $username)->first();
+            $user = User::where('username', $username)
+                ->first()
+                ->toArray();
 
             if (!$user) {
-            throw new Exception('User not found', 404);
+                throw new Exception('User not found', 404);
             }
 
             $this->message = 'User profile';
@@ -24,7 +26,7 @@ class UserController extends Controller
             $this->message = $e->getMessage();
             $this->code    = $e->getCode();
         }
-
+        
         return $this->createResponse($this->success, $this->message, $this->data, $this->code);
     }
 }
